@@ -14,7 +14,8 @@ public class AnkiCard {
 
     @Override
     public String toString() {
-        return word + ";" + transcription + ";" + translation + ";"
-                + examples.getEngExample() + ";" + examples.getRusExample() + ";" + soundURL + "\n";
+        String sep = "&";
+        return word + sep + transcription + sep + translation + sep
+                + examples.getEngExample() + sep + examples.getRusExample() + sep + soundURL + "\n";
     }
 }
