@@ -8,7 +8,7 @@ import service.WooordHuntService;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -18,7 +18,12 @@ public class Main {
         LingualeoClient lingualeoClient = new LingualeoClient();
 
 
-        Set<String> lines = Files.lines(Path.of("words.txt")).map(String::toLowerCase).collect(Collectors.toSet());
+        List<String> lines = Files.lines(Path.of("words.txt"))
+                .map(String::toLowerCase)
+                .map(String::trim)
+                .map(w -> w.replaceAll(" ", ""))
+                .distinct()
+                .collect(Collectors.toList());
 
 
         FileWriter fileWriter = new FileWriter("result.txt");

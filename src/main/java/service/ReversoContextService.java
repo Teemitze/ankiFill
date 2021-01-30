@@ -1,20 +1,23 @@
 package service;
 
-import lombok.SneakyThrows;
 import model.Examples;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.IOException;
+
 public class ReversoContextService {
 
-    @SneakyThrows
     public Examples getExamples(String word) {
-        final Document doc = Jsoup.connect("https://context.reverso.net/перевод/английский-русский/" + word).get();
-
-        final Element elementWithExample = getFirstExampleElement(doc);
-
-        return new Examples(parseEngExample(elementWithExample), parseRusExample(elementWithExample));
+        final Document doc;
+        try {
+            doc = Jsoup.connect("https://context.reverso.net/перевод/английский-русский/" + word).get();
+            final Element elementWithExample = getFirstExampleElement(doc);
+            return new Examples(parseEngExample(elementWithExample), parseRusExample(elementWithExample));
+        } catch (IOException e) {
+            return new Examples(null, null);
+        }
     }
 
 

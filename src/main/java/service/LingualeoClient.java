@@ -31,7 +31,7 @@ public class LingualeoClient {
 
     @SneakyThrows
     private JSONObject sendRequest(String word) {
-        final HttpGet request = new HttpGet("http://api.lingualeo.com/gettranslates?word=" + word);
+        final HttpGet request = new HttpGet("http://api.lingualeo.com/gettranslates?word=" + replaceSpace(word));
 
         final CloseableHttpResponse response = HttpClients.createDefault().execute(request);
 
@@ -51,5 +51,9 @@ public class LingualeoClient {
 
     private String getSoundUrlFromJSON(JSONObject jsonObject) {
         return jsonObject.getString("sound_url");
+    }
+
+    private String replaceSpace(String word) {
+        return word.replaceAll(" ", "%20");
     }
 }
